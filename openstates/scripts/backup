@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+env
+mongodump --host ${BILLY_MONGO_HOST} --db fiftystates
+tar cvzf dump.tar.gz dump/
+s3cmd put dump.tar.gz s3://${S3_BUCKET}/mongo/`date +%Y-%m-%d`-mongo.tar.gz
+
+# mongodump --host ${BILLY_MONGO_HOST} --db ${USERDATA_TABLE}
+# tar cvzf dump.tar.gz dump/
+# s3cmd put dump.tar.gz s3://${S3_BUCKET}/mongo-private/`date +%Y-%m-%d`-billy-userdata.tar.gz
+# rm -rf dump
+# rm dump.tar.gz
+# 
+# mongodump --host ${BILLY_MONGO_HOST} --db 
+# tar cvzf dump.tar.gz dump/
+# s3cmd put dump.tar.gz s3://${S3_BUCKET}/mongo-private/`date +%Y-%m`-newsblogs.tar.gz
+# rm -rf dump
+# rm dump.tar.gz
